@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Message Board</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- 左側留言板 -->
+        <div class="message-board-panel">
+            <h3>Message Board</h3>
+            <div class="public-messages" id="publicMessages">
+            </div>
+            <div class="message-input-area">
+                <textarea id="publicMessageInput" placeholder="Please leave your message..."></textarea>
+                <button onclick="submitPublicMessage()">Submission</button>
+            </div>
+        </div>
+
+        <!-- 私人對話介面 -->
+        <div class="private-chat-panel">
+            <h3>Conversation with the researcher</h3>
+            <div class="chat-messages" id="privateMessages">
+            </div>
+            <div class="chat-input-area">
+                <input type="text" id="privateChatInput" placeholder="Please input your message...">
+                <button onclick="sendPrivateMessage()">Send</button>
+            </div>
+        </div>
+
+        <!-- 管理員介面 (僅管理員可見) -->
+        <div class="admin-panel" id="adminPanel" style="display:none;">
+            <h3>Comments pending review</h3>
+            <div id="pendingMessages">
+            </div>
+        </div>
+    </div>
+    
+    <!-- 改進的調試面板 --> 
+    <div class="debug-panel" id="debugPanel" style="
+        position: fixed; 
+        top: 10px; 
+        right: 10px; 
+        background: rgba(240, 240, 240, 0.95); 
+        border-radius: 5px; 
+        font-size: 11px; 
+        box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        max-width: 200px;
+        z-index: 1000;
+    ">
+        <!-- 折疊按鈕 -->
+        <div style="
+            padding: 5px 10px;
+            background: #333;
+            color: white;
+            border-radius: 5px 5px 0 0;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        " onclick="toggleDebugPanel()">
+            <span>調試面板</span>
+            <span id="toggleIcon">▼</span>
+        </div>
+        
+        <!-- 調試內容 -->
+        <div id="debugContent" style="padding: 10px;">
+            <div id="debugInfo" style="margin-bottom: 8px;">
+                <p style="margin: 3px 0;">API: <span id="apiStatus" style="font-weight: bold; color: #666;">未初始化</span></p>
+                <p style="margin: 3px 0;">登入: <span id="loginStatus" style="font-weight: bold; color: #666;">未登入</span></p>
+                <p style="margin: 3px 0; font-size: 10px; color: #666;">最後: <span id="lastAction">無</span></p>
+            </div>
+            <div id="buttonDiv" style="margin: 5px 0;"></div>
+            <div style="display: flex; gap: 5px; flex-wrap: wrap;">
+                <button onclick="checkGoogleSheets()" style="
+                    padding: 3px 8px;
+                    font-size: 10px;
+                    border: 1px solid #ccc;
+                    background: white;
+                    border-radius: 3px;
+                    cursor: pointer;
+                ">檢查連接</button>
+                <button onclick="loadFromGoogleSheets()" style="
+                    padding: 3px 8px;
+                    font-size: 10px;
+                    border: 1px solid #ccc;
+                    background: white;
+                    border-radius: 3px;
+                    cursor: pointer;
+                ">載入數據</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Google Identity Services -->
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <!-- Google API Client -->
+    <script src="https://apis.google.com/js/api.js"></script>
+    <!-- js -->
+    <script src="messagesystem-new.js"></script>
+    
+    <!-- 折疊功能 -->
+    <script>
+        let debugPanelCollapsed = false;
+        
+        function toggleDebugPanel() {
+            debugPanelCollapsed = !debugPanelCollapsed;
+            const content = document.getElementById('debugContent');
+            const icon = document.getElementById('toggleIcon');
+            
+            if (debugPanelCollapsed) {
+                content.style.display = 'none';
+                icon.textContent = '▶';
+            } else {
+                content.style.display = 'block';
+                icon.textContent = '▼';
+            }
+        }
+     
+    </script>
+</body>
+</html>

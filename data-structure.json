@@ -1,0 +1,24 @@
+{
+  "publicMessages": {
+    "description": "公開留言板數據結構",
+    "fields": {
+      "id": "唯一標識符",
+      "author": "作者ID",
+      "content": "留言內容",
+      "timestamp": "時間戳記",
+      "status": "狀態 (pending/approved/rejected)",
+      "approvedBy": "審核者",
+      "approvedAt": "審核時間"
+    }
+  },
+  "privateMessages": {
+    "description": "私人對話數據結構",
+    "fields": {
+      "id": "唯一標識符",
+      "conversationID": "對話ID (用戶ID)",
+      "sender": "發送者 (participant/researcher)",
+      "content": "訊息內容",
+      "timestamp": "時間戳記"
+    }
+  }
+}
